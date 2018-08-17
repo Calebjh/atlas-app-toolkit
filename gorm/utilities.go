@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/protoc-gen-go/generator"
@@ -122,7 +123,7 @@ func indirectType(t reflect.Type) reflect.Type {
 func isModel(t reflect.Type) bool {
 	kind := t.Kind()
 	_, isValuer := reflect.Zero(t).Interface().(driver.Valuer)
-	if (kind == reflect.Struct || kind == reflect.Slice) && !isValuer {
+	if (kind == reflect.Struct || kind == reflect.Slice) && !isValuer && t != reflect.TypeOf(time.Time{}) {
 		return true
 	}
 	return false
